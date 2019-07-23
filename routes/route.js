@@ -9,7 +9,6 @@ var routes = function(app){
     
     //auth routes
     app.route('/api/auth').post(AuthController.login);
-    app.route('/api/admin').post(UserController.createUserAdmin);
 
     //setting routes
     app.route('/api/settings').get(SettingController.getInitSetting);

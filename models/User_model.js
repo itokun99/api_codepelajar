@@ -10,10 +10,9 @@ var User_model = {
             if( user_id !== null ) sqlValue[0] = user_id;
             db.query( sql, sqlValue ,function(err, result, field){
                 if(err){
-                    console.log(err);
-                    resolve(sendCallBack(true, err));
+                    reject(err);
                 } else {
-                    resolve(sendCallBack(false, result));
+                    resolve(result);
                 }
             });
         })
@@ -97,6 +96,34 @@ var User_model = {
         })
         return promise;
     },
+
+    createNewUser : function(data){
+        return new Promise(function(resolve, reject){
+            var sql = `INSERT INTO cp_users (
+                'user_id',
+                'user_name',
+                'user_fullname', 
+                'user_email', 
+                'user_password', 
+                'user_create_date', 
+                'user_type', 
+                'user_status', 
+                'user_pic', 
+                'user_bio'
+            ) VALUES ('', ?, ?, ?, ?, ?, ?, ?, ?, ? )`;
+            var sqlValue = [ 
+                data.user_fullname, 
+                data.user_name,
+                data.user_email, 
+                data.user_password, 
+                data.user_create_date, 
+                data.user_type, 
+                data.user_status, 
+                data.user_pic, 
+                data.user_bio
+            ]
+        })
+    }
 }
 
 module.exports = User_model;
