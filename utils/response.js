@@ -18,11 +18,11 @@ var notFound = function(res){
 
 var ok = function(data, res){
     res.status(200);
-    res.json({ data });
+    res.json({ ...data });
     res.end();
 }
 
-var badRequest = function(res, message){
+var badRequest = function(message, res){
     res.status(400);
     res.json({
         message: message
@@ -30,11 +30,11 @@ var badRequest = function(res, message){
     res.end();
 }
 
-var created = function(res, message, data){
+var created = function(message, data, res){
     res.status(201);
     res.json({
         message: message,
-        data
+        ...data !== null ? data : null  
     })
     res.end();
 }

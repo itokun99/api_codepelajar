@@ -13,10 +13,9 @@ var Token_model = {
             }
             db.query(sql, user_id, function(err, result, field){
                 if(err){
-                    console.log(err);
-                    resolve(sendCallBack(true, err));
+                    reject(err)
                 } else {
-                    resolve(sendCallBack(false, result));
+                    resolve(result);
                 }
             })
         })
@@ -27,22 +26,22 @@ var Token_model = {
         var hash = bcrypt.hashSync("c0d3p3l4j4r", salt);
         var promise = new Promise(function(resolve, reject){
             var sql = `INSERT INTO cp_usertoken (
-                token_id,
                 user_id,
-                token_value,
-                token_level
-            ) VALUES ( "" , ? , ? , ? )`;
+                token,
+                type,
+                status
+            ) VALUES ( ? , ? , ? , ? )`;
             var sqlValue = [
                 data.user_id,
                 hash,
-                data.token_level
+                data.type,
+                1
             ];
             db.query(sql, sqlValue, function(err, result, field){
                 if(err){
-                    console.log(err);
-                    resolve(sendCallBack(true, err));
+                    reject(err)
                 } else {
-                    resolve(sendCallBack(false, result));
+                    resolve(result);
                 }
             })
         })

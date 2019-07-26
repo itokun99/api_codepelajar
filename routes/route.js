@@ -6,19 +6,20 @@ var routes = function(app){
     //user routes
     app.route('/api/users').get(UserController.getUser);
     app.route('/api/users/:user_id').get(UserController.getUser);
+    app.route('/api/users').post(UserController.createUser);
     
     //auth routes
     app.route('/api/auth').post(AuthController.login);
 
     //setting routes
-    app.route('/api/settings').get(SettingController.getInitSetting);
+    app.route('/api/codepelajar').get(SettingController.getInitSetting);
     
     // default response
     app.route("*").get(function(req, res){
         res.status(405);
         res.json({
             status : 405,
-            message : "method not allowed"
+            message : "method not allowed!"
         })
         res.end();
     })
