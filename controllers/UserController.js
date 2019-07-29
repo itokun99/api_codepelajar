@@ -39,9 +39,9 @@ var UserController = {
             var user_fullname = req.body.fullname;
             var user_email = req.body.email;
             var user_password = bcrypt.hashSync(req.body.password, generateSalt);
-            var user_created_date = moment().format('YYYY-MM-DD');
+            var user_create_date = moment().format('YYYY-MM-DD');
             var user_type = 1;
-            var user_status = 0;
+            var user_status = 1;
             var user_pic = 'user_default.png';
             var user_bio = req.body.bio;
 
@@ -50,7 +50,7 @@ var UserController = {
                 user_fullname,
                 user_email,
                 user_password,
-                user_created_date,
+                user_create_date,
                 user_type,
                 user_status,
                 user_pic,

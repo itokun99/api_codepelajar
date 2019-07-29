@@ -1,4 +1,4 @@
-var serverError = function(error, res){
+var serverError = function({error, res}){
     res.status(500);
     res.json({
         message: "Internal Server Error!",
@@ -55,6 +55,14 @@ var forBidden = function(res){
     res.end();
 }
 
+var unauthorized = function(res){
+    res.status(401);
+    res.json({
+        message: "Unauthorized!"
+    })
+    res.end();
+}
+
 
 
 
@@ -66,4 +74,5 @@ module.exports = {
     created,
     forBidden,
     badRequest,
+    unauthorized
 }

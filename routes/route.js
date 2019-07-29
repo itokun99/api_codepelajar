@@ -6,7 +6,7 @@ var routes = function(app){
     //user routes
     app.route('/api/users').get(UserController.getUser);
     app.route('/api/users/:user_id').get(UserController.getUser);
-    app.route('/api/users').post(UserController.createUser);
+    app.route('/api/users').post(AuthController.isAuthorized, UserController.createUser);
     
     //auth routes
     app.route('/api/auth').post(AuthController.login);

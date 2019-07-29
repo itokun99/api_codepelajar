@@ -7,7 +7,7 @@ var Token_model = {
     getToken : function(user_id, tokenOnly = false){
         var promise = new Promise(function(resolve, reject){
             if(tokenOnly){
-                var sql = "SELECT token_value FROM cp_usertoken WHERE user_id = ?";
+                var sql = "SELECT token FROM cp_usertoken WHERE user_id = ?";
             } else {
                 var sql = "SELECT *  FROM cp_usertoken WHERE user_id = ? ";
             }
@@ -20,6 +20,18 @@ var Token_model = {
             })
         })
         return promise;
+    },
+    checkToken: function(token){
+        return new Promise(function(resolve, reject){
+            var sql = "SELECT user_id FROM cp_usertoken WHERE token = ? ";
+            db.query(sql, token, function(err, result, field){
+                if(err){
+                    reject(err);
+                } else {
+                    resolve(result);
+                }
+            })
+        })
     },
     createToken : function(data){
         var salt = bcrypt.genSaltSync(10);
