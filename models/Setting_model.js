@@ -17,6 +17,24 @@ var Setting_model = {
             })
         })
         return promise;
+    },
+    updateSetting: function(data){
+        return new Promise(function(resolve, reject){
+            var sql =  `
+                UPDATE cp_settings
+                SET site_title = '${data.site_title}' ,
+                site_description = '${data.site_description}'
+                WHERE id = 1
+            `;
+            db.query(sql, function(err, result){
+                if(err){
+                    reject(err)
+                } else {
+                    console.log(result)
+                    resolve(result);
+                }
+            })
+        })
     }
 }
 

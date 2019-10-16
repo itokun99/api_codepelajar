@@ -4,15 +4,12 @@ var SettingController = require('../controllers/SettingController');
 
 var routes = function(app){
     //user routes
-    app.route('/api/users').get(UserController.getUser);
-    app.route('/api/users/:user_id').get(UserController.getUser);
-    app.route('/api/users').post(AuthController.isAuthorized, UserController.createUser);
-    
+    app.route('/api/users').get(UserController.getUsers);
+    app.route('/api/user').post(UserController.createUser);
+
+
     //auth routes
     app.route('/api/auth').post(AuthController.login);
-
-    //setting routes
-    app.route('/api/codepelajar').get(SettingController.getInitSetting);
     
     // default response
     app.route("*").get(function(req, res){

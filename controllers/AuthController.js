@@ -1,7 +1,7 @@
 var bcrypt = require('bcrypt');
-var userModel = require('../models/User_model');
+var Users = require('../models/User_model');
 var response = require('../utils/response');
-var tokenModel = require('../models/Token_model');
+var Tokens = require('../models/Token_model');
 var _ = require('lodash');
 
 var AuthController = {
@@ -9,34 +9,21 @@ var AuthController = {
         try {
             var email = req.body.email;
             var password = req.body.password;
-            var data = [];
-            var existing_email = await userModel.checkEmail(email);
-            var existing_username = await userModel.checkUserName(email);
-            if(!_.isEmpty(existing_email) && _.isArray(existing_email)) data = existing_email;
-            if(!_.isEmpty(existing_username) && _.isArray(existing_username)) data = existing_username;
-            if(_.isEmpty(data)){
-                response.badRequest("User email/username not registered!", res)
-            } else {
-                var users = data;
-                if(_.isEqual(users.length, 1)){
-                    var user = users[0];
-                    var verify_password = bcrypt.compareSync(password, user.user_password);
-                    if(verify_password){
-                        var token_data = await tokenModel.getToken(user.user_id);
-                        if(!_.isEmpty(token_data) && _.isArray(token_data)){
-                            var user_token = token_data[0].token;
-                            user.token = user_token;
-                            response.ok(user,res);
-                        } else {
-                            response.badRequest("User authorize is missing! please contact administrator", res);
-                        }
-                    } else {
-                        response.badRequest("Wrong password!", res);
-                    }
-                } else {
-                    response.badRequest("User cannot login!", res)
-                }
+
+            if(!email || email === ''){
+                return response.badRequest('Fiel')
             }
+
+            var user = await Users.findAll({
+                limit: 1,
+                where: { email: email }
+            })
+
+            if(!user) return response.badRequest('Account not found!');
+
+            
+
+
 
         } catch (e){
             response.serverError(e, res)
